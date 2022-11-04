@@ -49,7 +49,6 @@ class FollowSerializer(serializers.ModelSerializer):
                 'Нельзя подписаться на самого себя!')
         return data
 
-
     class Meta:
         fields = ('user', 'following')
         model = Follow
