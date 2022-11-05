@@ -13,8 +13,6 @@ router_v1.register(
     CommentViewSet,
     basename='comments')
 
-djoser_urls = ['djoser.urls', 'djoser.urls.jwt']
-
 auth_patterns = [
     path('', include('djoser.urls')),
     path('', include('djoser.urls.jwt'))

@@ -15,13 +15,19 @@ from .serializers import (
 User = get_user_model()
 
 
+class GetAndPostViewSet(mixins.CreateModelMixin,
+                        mixins.ListModelMixin,
+                        GenericViewSet):
+    pass
+
+
 class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
     pagination_class = LimitOffsetPagination
     permission_classes = (AuthorOrReadOnly, )
 
-    def perform_create(self, serializer): 
+    def perform_create(self, serializer):
         serializer.save(author=self.request.user)
 
     def get_permissions(self):
@@ -53,13 +59,6 @@ class GroupViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Group.objects.all()
     serializer_class = GroupSerializer
     permission_classes = (permissions.AllowAny,)
-
-
-class GetAndPostViewSet(
-    mixins.CreateModelMixin,
-    mixins.ListModelMixin,
-    GenericViewSet):
-    pass
 
 
 class FollowViewSet(GetAndPostViewSet):
